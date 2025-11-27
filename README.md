@@ -17,6 +17,7 @@ It is suggested you create a **virtual environment**.
 Install dependencies:
 ```bash
 pip install -r requirements.txt
+```
 
 To Run:
 ```bash
