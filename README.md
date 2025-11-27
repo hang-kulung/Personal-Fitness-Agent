@@ -1,20 +1,20 @@
-##Description
+## Description
 
-This project uses google ADK service to create an agent which act as your personal trainer. 
+This project uses Google ADK service to create an agent which acts as your personal trainer.
 
-This project is build to practice the learning from **5-Day AI Agents Intensive Course with Google** presented by Kaggle.
+This project is built to practice the learning from the **5-Day AI Agents Intensive Course with Google** presented by Kaggle.
 
-This github repo is submitted to the Capstone Project on Kaggle.
+This GitHub repo is submitted as a **Capstone Project on Kaggle**.
 
+---
 
-##Installation
+## Installation
 
-This project was built against Python 3.14.0.
+This project was built against **Python 3.14.0**.
 
-It is suggested you create a vitrual environment.
+It is suggested you create a **virtual environment**.
 
-Install dependenies 
- `pip install -r requirements.txt
+Install dependencies:
+```bash
+pip install -r requirements.txt
 
-To run the code:
-`python -m agent.py
