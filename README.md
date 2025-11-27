@@ -18,3 +18,6 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 
+To Run:
+```bash
+python agent.py
