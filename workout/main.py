@@ -1,14 +1,13 @@
 import asyncio
-# import os
-# from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from graph import build_graph
 
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 USER_ID   = "user_001"
-THREAD_ID = f"{USER_ID}_session"   # one persistent thread per user
+THREAD_ID = f"{USER_ID}_session"
 DB_PATH   = "workout_agent.db"
 
 
@@ -29,8 +28,8 @@ async def main():
 
             print("Agent: ", end="", flush=True)
 
-            # Pass user_id + thread_id into initial state once
-            # After first turn the checkpointer carries state forward
+            final_response = None
+
             async for event in graph.astream(
                 {
                     "messages":  [HumanMessage(content=user_input)],
@@ -38,16 +37,26 @@ async def main():
                     "thread_id": THREAD_ID,
                 },
                 config=config,
-                stream_mode="values",
+                stream_mode="updates",
             ):
-                # Print the last AI message when it appears
-                messages = event.get("messages", [])
-                if messages and hasattr(messages[-1], "content"):
-                    last = messages[-1]
-                    if hasattr(last, "tool_calls") and last.tool_calls:
-                        continue    # skip intermediate tool-call messages
-                    if last.content and last.__class__.__name__ == "AIMessage":
-                        print(last.content)
+                for node_name, node_output in event.items():
+                    if not node_output:          # ← add this guard
+                        continue
+                    messages = node_output.get("messages", [])
+                    if messages:
+                        last = messages[-1]
+                        if last.__class__.__name__ == "AIMessage":
+                            if not (hasattr(last, "tool_calls") and last.tool_calls):
+                                final_response = last.content
+
+            # print once after stream fully ends
+            if final_response:
+                if isinstance(final_response, str):
+                    print(final_response)
+                elif isinstance(final_response, list):
+                    for block in final_response:
+                        if isinstance(block, dict) and block.get("type") == "text":
+                            print(block["text"])
 
 
 if __name__ == "__main__":
