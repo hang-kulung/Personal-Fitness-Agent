@@ -1,6 +1,25 @@
-__pycache__
-.env
-*.db
-.LGWenv
+# Log files
 memory/
 *.json
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.LGWenv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# SQLite databases
+*.db
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# macOS/Linux junk
+.DS_Store
