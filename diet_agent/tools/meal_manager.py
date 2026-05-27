@@ -6,8 +6,8 @@ from langchain_core.tools import tool
 
 # ── file paths ────────────────────────────────────────────────────────────────
 
-PLAN_FILE    = "meal_plan.json"
-MEMORY_DIR   = "memory"
+PLAN_FILE    = "../data/meal_plan.json"
+MEMORY_DIR   = "../shared/memory"
 
 
 # ── generic helpers ───────────────────────────────────────────────────────────

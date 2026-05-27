@@ -2,7 +2,7 @@ import json, os, tempfile
 from datetime import datetime
 from langchain_core.tools import tool
 
-MEMORY_DIR = "memory"
+MEMORY_DIR = "../shared/memory"
 
 def _mem_path(filename: str) -> str:
     os.makedirs(MEMORY_DIR, exist_ok=True)

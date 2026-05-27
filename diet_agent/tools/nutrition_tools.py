@@ -4,7 +4,7 @@ import tempfile
 from datetime import datetime
 from langchain_core.tools import tool
 
-MEMORY_DIR = "memory"
+MEMORY_DIR = "../shared/memory"
 
 
 def _path(filename: str) -> str:

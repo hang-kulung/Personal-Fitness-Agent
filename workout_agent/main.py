@@ -1,14 +1,14 @@
 import asyncio
-from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from graph import build_graph
 
+from dotenv import load_dotenv
 load_dotenv()
 
-USER_ID   = "diet_user_001"
+USER_ID   = "user_001"
 THREAD_ID = f"{USER_ID}_session"
-DB_PATH   = "diet_agent.db"          # separate DB from workout agent
+DB_PATH   = "../data/workout_agent.db"
 
 
 async def main():
@@ -16,7 +16,7 @@ async def main():
         graph  = build_graph(checkpointer)
         config = {"configurable": {"thread_id": THREAD_ID}}
 
-        print("Dietary Agent  |  type 'exit' to quit\n")
+        print("Workout Trainer Agent  |  type 'exit' to quit\n")
 
         while True:
             user_input = input("You: ").strip()
@@ -37,18 +37,19 @@ async def main():
                     "thread_id": THREAD_ID,
                 },
                 config=config,
-               stream_mode="updates",
+                stream_mode="updates",
             ):
                 for node_name, node_output in event.items():
-                    if not node_output:          
+                    if not node_output:          # ← add this guard
                         continue
                     messages = node_output.get("messages", [])
                     if messages:
                         last = messages[-1]
                         if last.__class__.__name__ == "AIMessage":
                             if not (hasattr(last, "tool_calls") and last.tool_calls):
-                                final_response = last.content 
+                                final_response = last.content
 
+            # print once after stream fully ends
             if final_response:
                 if isinstance(final_response, str):
                     print(final_response)
