@@ -5,10 +5,11 @@ from datetime import datetime
 from langchain_core.tools import tool
 
 # ── file paths ────────────────────────────────────────────────────────────────
+_HERE     = os.path.dirname(os.path.abspath(__file__))
+_ROOT     = os.path.abspath(os.path.join(_HERE, "../.."))   # Project root
 
-PLAN_FILE    = "../data/workout_plan.json"
-MEMORY_DIR   = "../shared/memory"
-
+PLAN_FILE  = os.path.join(_ROOT, "data", "workout_plan.json")
+MEMORY_DIR = os.path.join(_ROOT, "shared", "memory")
 
 # ── generic helpers ───────────────────────────────────────────────────────────
 

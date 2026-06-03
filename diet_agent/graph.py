@@ -1,14 +1,14 @@
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import ToolNode, tools_condition
 
-from state import DietState
-from nodes.agent import build_agent_node
-from nodes.memory import load_memory_node, save_memory_node
+from diet_agent.state import DietState
+from diet_agent.nodes.agent import build_agent_node
+from diet_agent.nodes.memory import load_memory_node, save_memory_node
 
-from tools.date_tool       import get_current_date
-from tools.web_search      import web_search
-from tools.nutrition_tools import update_diet_preferences, log_diet_progress
-from tools.meal_manager    import (
+from diet_agent.tools.date_tool       import get_current_date
+from diet_agent.tools.web_search      import web_search
+from diet_agent.tools.nutrition_tools import update_diet_preferences, log_diet_progress
+from diet_agent.tools.meal_manager    import (
     save_meal_plan,
     get_meal_plan,
     get_todays_meals,

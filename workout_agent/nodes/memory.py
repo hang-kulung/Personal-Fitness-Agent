@@ -3,7 +3,10 @@ import os
 from datetime import datetime
 from langchain_core.messages import AIMessage
 
-MEMORY_DIR = "../shared/memory"
+_HERE     = os.path.dirname(os.path.abspath(__file__))
+_ROOT     = os.path.abspath(os.path.join(_HERE, "../.."))
+
+MEMORY_DIR = os.path.join(_ROOT, "shared", "memory")
 
 def _read(filename, default):
     p = os.path.join(MEMORY_DIR, filename)

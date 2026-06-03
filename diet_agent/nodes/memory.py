@@ -4,7 +4,10 @@ import tempfile
 from datetime import datetime
 from langchain_core.messages import AIMessage
 
-MEMORY_DIR = "../shared/memory"
+_HERE     = os.path.dirname(os.path.abspath(__file__))
+_ROOT     = os.path.abspath(os.path.join(_HERE, "../.."))
+
+MEMORY_DIR = os.path.join(_ROOT, "shared", "memory")
 MAX_RECENT_EVENTS = 20
 
 

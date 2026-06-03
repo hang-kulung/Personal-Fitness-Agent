@@ -1,21 +1,23 @@
+# supervisor/main.py
 import asyncio
-from langchain_core.messages import HumanMessage
-from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
-from graph import build_graph
-
-from dotenv import load_dotenv
 import os
+import sys
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from dotenv import load_dotenv
+from langchain_core.messages import HumanMessage
+from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
+
 load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
+from supervisor.graph import build_graph   # ← after sys.path is set
+
 USER_ID   = "user_001"
-THREAD_ID = f"{USER_ID}_session"
-
-_HERE   = os.path.dirname(os.path.abspath(__file__))
-_ROOT   = os.path.abspath(os.path.join(_HERE, ".."))
-
-DB_PATH = os.path.join(_ROOT, "data", "workout_agent.db")
+THREAD_ID = f"{USER_ID}_supervisor"
+DB_PATH   = os.path.join(PROJECT_ROOT, "data", "supervisor.db")
 
 
 async def main():
@@ -23,7 +25,7 @@ async def main():
         graph  = build_graph(checkpointer)
         config = {"configurable": {"thread_id": THREAD_ID}}
 
-        print("Workout Trainer Agent  |  type 'exit' to quit\n")
+        print("Personal Fitness Agent  |  type 'exit' to quit\n")
 
         while True:
             user_input = input("You: ").strip()
@@ -47,7 +49,7 @@ async def main():
                 stream_mode="updates",
             ):
                 for node_name, node_output in event.items():
-                    if not node_output:          # ← add this guard
+                    if not node_output:
                         continue
                     messages = node_output.get("messages", [])
                     if messages:
@@ -56,7 +58,6 @@ async def main():
                             if not (hasattr(last, "tool_calls") and last.tool_calls):
                                 final_response = last.content
 
-            # print once after stream fully ends
             if final_response:
                 if isinstance(final_response, str):
                     print(final_response)

@@ -2,10 +2,8 @@ import os
 import time
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage
-from diet_agent.prompts import build_system_prompt
-from dotenv import load_dotenv
+from supervisor.prompts import build_system_prompt
 
-load_dotenv()
 
 def build_agent_node(tools: list):
     llm = ChatGoogleGenerativeAI(

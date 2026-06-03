@@ -1,14 +1,20 @@
 import asyncio
-from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from graph import build_graph
+from dotenv import load_dotenv
+import os
 
-load_dotenv()
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 USER_ID   = "diet_user_001"
 THREAD_ID = f"{USER_ID}_session"
-DB_PATH   = "../data/diet_agent.db"          # separate DB from workout agent
+
+_HERE   = os.path.dirname(os.path.abspath(__file__))
+_ROOT   = os.path.abspath(os.path.join(_HERE, ".."))
+
+DB_PATH = os.path.join(_ROOT, "data", "diet_agent.db")
 
 
 async def main():

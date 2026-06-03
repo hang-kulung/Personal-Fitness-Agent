@@ -2,14 +2,13 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import ToolNode, tools_condition
 # from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 
-from state import WorkoutState
-from nodes.agent import build_agent_node
-from nodes.memory import load_memory_node, save_memory_node
-
-from tools.date_tool    import get_current_date
-from tools.web_search   import web_search
-from tools.memory_tools import update_user_profile, update_preferences, log_progress
-from tools.plan_manager import (
+from workout_agent.state import WorkoutState
+from workout_agent.nodes.agent import build_agent_node
+from workout_agent.nodes.memory import load_memory_node, save_memory_node
+from workout_agent.tools.date_tool import get_current_date
+from workout_agent.tools.web_search import web_search
+from workout_agent.tools.memory_tools import update_user_profile, update_preferences, log_progress
+from workout_agent.tools.plan_manager import (
     save_workout_plan,
     get_workout_plan,
     get_todays_workout,
