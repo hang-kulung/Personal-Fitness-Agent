@@ -1,4 +1,3 @@
-````markdown
 # 🏋️ Personal Fitness Agent
 
 An AI-powered personal fitness assistant that generates personalized **7-day workout and diet plans** based on each user's profile, fitness goals, and preferences.
